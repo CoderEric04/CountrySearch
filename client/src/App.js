@@ -7,25 +7,29 @@ import './App.css';
 
 function App() {
 
-  const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
+  // State variables
+  const [data, setData] = useState([]); // Stores retrieved data
+  const [searchTerm, setSearchTerm] = useState(''); // Stores search term entered
+  const [filteredData, setFilteredData] = useState([]); // Stores filtered data based on search term
 
+  // Fetch data
   useEffect(() => {
     fetch("/countries")
     .then(res => res.json())
     .then(data => {
-        setData(data.countries);
-        setFilteredData(data.countries);
+        setData(data.countries); // Set data
+        setFilteredData(data.countries); //Sets default value for filtered data
       }
     );
   }, []);
 
+  // Handle changes in input
   const handleSearchChange = (e) => {
-    const term = e.target.value.toLowerCase();
+    const term = e.target.value.toLowerCase(); // Removes case sensitivity
     
-    setSearchTerm(term);
-  
+    setSearchTerm(term); // Update search term
+    
+    // Filter data based on search term
     setFilteredData(data.filter((country) =>
       country.toLowerCase().includes(term)
     ));
